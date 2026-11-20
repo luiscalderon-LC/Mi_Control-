@@ -1,1 +1,143 @@
-<p>dinero works!</p>
+
+<div class="dinero-page">
+
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">ADMINISTRACIÓN DE EFECTIVO</p>
+      <h1>Dinero mensual</h1>
+      <p>Registra el dinero que recibes para tus pasajes.</p>
+    </div>
+  </header>
+
+  <section class="summary">
+    <div class="summary-icon">S/</div>
+    <div>
+      <span>Total de efectivo registrado</span>
+      <h2>{{ totalRecibido | currency:'PEN':'symbol':'1.2-2' }}</h2>
+      <small>Acumulado de todos los meses registrados</small>
+    </div>
+  </section>
+
+  <div class="content-grid">
+
+    <section class="panel">
+      <h3>{{ editandoId !== null ? 'Editar registro' : 'Registrar efectivo' }}</h3>
+      <p class="panel-description">
+        Ingresa el monto que te entregaron para el mes.
+      </p>
+
+      @if (mensaje) {
+        <div class="alert success">{{ mensaje }}</div>
+      }
+
+      @if (error) {
+        <div class="alert error">{{ error }}</div>
+      }
+
+      <form (ngSubmit)="guardar()" #dineroForm="ngForm">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="mes">Mes</label>
+            <select id="mes" name="mes" [(ngModel)]="mes" required>
+              @for (nombre of meses; track $index) {
+                <option [value]="$index + 1">{{ nombre }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="anio">Año</label>
+            <input id="anio" type="number" name="anio"
+                   [(ngModel)]="anio"
+                   min="2000" max="2100" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="monto">Monto recibido (S/)</label>
+          <input id="monto" type="number" name="monto"
+                 [(ngModel)]="monto"
+                 min="0.01" step="0.01"
+                 placeholder="Ejemplo: 350.00" required>
+        </div>
+
+        <div class="form-group">
+          <label for="observacion">Observación (opcional)</label>
+          <textarea id="observacion" name="observacion"
+                    [(ngModel)]="observacion"
+                    rows="3"
+                    placeholder="Dinero recibido para pasajes del mes">
+          </textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary"
+                  [disabled]="dineroForm.invalid">
+            {{ editandoId !== null ? 'Actualizar' : 'Guardar efectivo' }}
+          </button>
+
+          @if (editandoId !== null) {
+            <button type="button" class="btn-secondary"
+                    (click)="limpiarFormulario()">
+              Cancelar
+            </button>
+          }
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h3>Historial de dinero recibido</h3>
+      <p class="panel-description">
+        Consulta los presupuestos registrados por mes.
+      </p>
+
+      @if (registros.length === 0) {
+        <div class="empty-state">
+          <div class="empty-icon">S/</div>
+          <h4>Sin registros</h4>
+          <p>Todavía no has registrado dinero mensual.</p>
+        </div>
+      } @else {
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Período</th>
+                <th>Monto</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (registro of registros; track registro.id) {
+                <tr>
+                  <td>
+                    <strong>{{ nombreMes(registro.mes) }}</strong>
+                    <small>{{ registro.anio }}</small>
+                  </td>
+                  <td class="amount">
+                    {{ registro.monto | currency:'PEN':'symbol':'1.2-2' }}
+                  </td>
+                  <td>
+                    <div class="actions">
+                      <button class="edit-btn" type="button"
+                              (click)="editar(registro)">
+                        Editar
+                      </button>
+                      <button class="delete-btn" type="button"
+                              (click)="eliminar(registro.id)">
+                        Eliminar
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </section>
+
+  </div>
+</div>
