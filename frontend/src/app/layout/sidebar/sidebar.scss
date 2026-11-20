@@ -1,0 +1,141 @@
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background: #101d35;
+  color: white;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 10px 38px;
+
+  h2 {
+    font-size: 22px;
+    margin: 0;
+  }
+
+  span {
+    font-size: 11px;
+    color: #9caec9;
+  }
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #2563eb;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.menu-title {
+  color: #8191ad;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 0 14px;
+  margin-bottom: 18px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 10px;
+    color: #b8c5d9;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.2s;
+
+    span {
+      font-size: 20px;
+      width: 24px;
+      text-align: center;
+    }
+
+    &:hover {
+      background: #1d3050;
+      color: white;
+    }
+
+    &.active {
+      background: #2563eb;
+      color: white;
+      font-weight: 600;
+    }
+  }
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  border-top: 1px solid #293a56;
+  padding: 22px 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  strong, small {
+    display: block;
+  }
+
+  strong { font-size: 13px; }
+  small { color: #9caec9; font-size: 11px; }
+}
+
+.avatar {
+  background: #344c70;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 14px;
+  }
+
+  .brand {
+    padding: 0 4px 14px;
+  }
+
+  .menu-title, .sidebar-footer {
+    display: none;
+  }
+
+  .menu {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+
+    a {
+      flex-shrink: 0;
+      white-space: nowrap;
+      padding: 10px;
+      font-size: 12px;
+    }
+  }
+}

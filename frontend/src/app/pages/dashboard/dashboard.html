@@ -1,0 +1,146 @@
+
+<div class="dashboard">
+
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">RESUMEN GENERAL</p>
+      <h1>Panel principal</h1>
+      <p class="subtitle">
+        Controla tu dinero y tus actividades del mes.
+      </p>
+    </div>
+
+    <a routerLink="/pasajes" class="primary-btn">
+      + Registrar pasaje
+    </a>
+  </header>
+
+  <section class="welcome">
+    <div>
+      <span class="welcome-label">MI CONTROL FINANCIERO</span>
+      <h2>Tu dinero, siempre organizado.</h2>
+      <p>
+        Consulta tus gastos de transporte y
+        mantén el control de tu efectivo mensual.
+      </p>
+    </div>
+    <div class="welcome-symbol">S/</div>
+  </section>
+
+  <section class="stats">
+    <article class="stat-card">
+      <div class="stat-top">
+        <span>Dinero recibido</span>
+        <span class="stat-icon blue">S/</span>
+      </div>
+      <h2>{{ dineroRecibido | currency:'PEN':'symbol':'1.2-2' }}</h2>
+      <p>Efectivo entregado este mes</p>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-top">
+        <span>Gastos en pasajes</span>
+        <span class="stat-icon orange">↗</span>
+      </div>
+      <h2>{{ totalPasajes | currency:'PEN':'symbol':'1.2-2' }}</h2>
+      <p>Total utilizado en transporte</p>
+    </article>
+
+    <article class="stat-card">
+      <div class="stat-top">
+        <span>Saldo disponible</span>
+        <span class="stat-icon green">✓</span>
+      </div>
+      <h2>{{ saldoDisponible | currency:'PEN':'symbol':'1.2-2' }}</h2>
+      <p>Dinero restante del mes</p>
+    </article>
+  </section>
+
+  <section class="content-grid">
+    <article class="panel">
+      <div class="panel-header">
+        <div>
+          <h3>Últimos movimientos</h3>
+          <p>Registro reciente de tus pasajes</p>
+        </div>
+        <a routerLink="/pasajes">Ver todos</a>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Destino</th>
+              <th>Motivo</th>
+              <th>Monto</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (item of movimientos; track $index) {
+              <tr>
+                <td>{{ item.fecha | date:'dd/MM/yyyy' }}</td>
+                <td>{{ item.destino }}</td>
+                <td>{{ item.motivo }}</td>
+                <td class="amount">
+                  -{{ item.monto | currency:'PEN':'symbol':'1.2-2' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="panel quick-panel">
+      <div class="panel-header">
+        <div>
+          <h3>Accesos rápidos</h3>
+          <p>Administra tus registros</p>
+        </div>
+      </div>
+
+      <a routerLink="/dinero" class="quick-link">
+        <span class="quick-icon blue">S/</span>
+        <div>
+          <strong>Dinero mensual</strong>
+          <small>Registrar efectivo recibido</small>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+
+      <a routerLink="/pasajes" class="quick-link">
+        <span class="quick-icon orange">↗</span>
+        <div>
+          <strong>Mis pasajes</strong>
+          <small>Registrar viajes y montos</small>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+
+      <a routerLink="/alimentacion" class="quick-link">
+        <span class="quick-icon green">✓</span>
+        <div>
+          <strong>Alimentación</strong>
+          <small>Marcar desayunos, almuerzos y cenas</small>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+
+      <a routerLink="/reportes" class="quick-link">
+        <span class="quick-icon purple">▤</span>
+        <div>
+          <strong>Mis reportes</strong>
+          <small>Generar archivos Excel y PDF</small>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </article>
+  </section>
+
+  <p class="demo-note">
+    Vista demostrativa: los importes se reemplazarán
+    por tus registros reales al conectar la base de datos.
+  </p>
+</div>
